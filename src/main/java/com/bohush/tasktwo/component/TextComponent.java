@@ -1,5 +1,9 @@
 package com.bohush.tasktwo.component;
 
-public abstract class TextComponent {
-
+public interface TextComponent {
+  void operation();
+  boolean add(TextComponent component);
+  boolean remove(TextComponent component);
 }
+
+
