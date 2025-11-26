@@ -8,7 +8,7 @@ public class SymbolLeaf implements TextComponent {
   }
 
   @Override
-  public void operation() {
+  public void show() {
     System.out.print(value);
   }
 

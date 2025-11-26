@@ -6,9 +6,9 @@ public class TextComposite implements TextComponent {
   private List<TextComponent> components = new ArrayList<>();
 
   @Override
-  public void operation() {
+  public void show() {
     for (TextComponent component : components) {
-      component.operation();
+      component.show();
     }
   }
 
