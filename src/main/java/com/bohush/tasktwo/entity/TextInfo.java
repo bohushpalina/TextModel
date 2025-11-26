@@ -1,15 +1,19 @@
 package com.bohush.tasktwo.entity;
 import com.bohush.tasktwo.component.TextComposite;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Objects;
 
 public class TextInfo {
+  private static final Logger log = LogManager.getLogger();
   private String rawText;
   private TextComposite rootComponent;
 
   public TextInfo(String rawText, TextComposite rootComponent) {
     this.rawText = rawText;
     this.rootComponent = rootComponent;
+    log.info("TextInfo entity created successfully.");
   }
 
   public TextComposite getRootComponent() {
@@ -22,10 +26,12 @@ public class TextInfo {
 
   public void setRawText(String rawText) {
     this.rawText = rawText;
+    log.info("Raw text updated in TextInfo.");
   }
 
   public void setRootComponent(TextComposite rootComponent) {
     this.rootComponent = rootComponent;
+    log.info("Root component updated in TextInfo.");
   }
 
   @Override
