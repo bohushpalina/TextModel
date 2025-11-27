@@ -10,10 +10,12 @@ public class TextComposite implements TextComponent {
   private List<TextComponent> components = new ArrayList<>();
 
   @Override
-  public void show() {
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
     for (TextComponent component : components) {
-      component.show();
+      sb.append(component.toString());
     }
+    return sb.toString();
   }
 
   @Override

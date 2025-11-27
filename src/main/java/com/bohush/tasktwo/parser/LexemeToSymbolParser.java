@@ -4,11 +4,11 @@ import com.bohush.tasktwo.component.TextComposite;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class SentenceToSymbolParser extends AbstractTextParser {
+public class LexemeToSymbolParser extends AbstractTextParser {
   private static final Logger log = LogManager.getLogger();
   private static final String PART_OF_SENTENCE_REGEX = "[\\S\\s]";
 
-  public SentenceToSymbolParser() {
+  public LexemeToSymbolParser() {
     super(PART_OF_SENTENCE_REGEX);
   }
 

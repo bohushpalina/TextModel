@@ -15,7 +15,7 @@ public class TextReaderImpl implements TextReader {
   private static final Logger log = LogManager.getLogger();
 
   @Override
-  public String readFile(String filePath) throws TextException
+  public String read(String filePath) throws TextException
   {
     Path path = Paths.get(filePath);
     try
