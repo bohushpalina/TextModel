@@ -1,24 +1,37 @@
 package com.bohush.tasktwo.component;
 
 public class SymbolLeaf implements TextComponent {
-  private char value;
 
-  public SymbolLeaf(char value) {
-    this.value = value;
+  private final char symbol;
+  private final TextType type;
+
+  public SymbolLeaf(char symbol, TextType type) {
+    this.symbol = symbol;
+    this.type = type;
   }
 
   @Override
-  public String toString() {
-    return String.valueOf(value);
+  public int count() {
+    return 1;
   }
 
   @Override
-  public boolean add(TextComponent component) {
-    return false;
+  public TextComponent add(TextComponent component) {
+    throw new UnsupportedOperationException("Leaf cannot add children");
   }
 
   @Override
   public boolean remove(TextComponent component) {
-    return false;
+    throw new UnsupportedOperationException("Leaf cannot remove children");
+  }
+
+  @Override
+  public TextComponent getChild(int index) {
+    throw new UnsupportedOperationException("Leaf has no children");
+  }
+
+  @Override
+  public String toString() {
+    return String.valueOf(symbol);
   }
 }

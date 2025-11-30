@@ -1,58 +1,44 @@
 package com.bohush.tasktwo.service.impl;
+
 import com.bohush.tasktwo.component.TextComponent;
 import com.bohush.tasktwo.component.TextComposite;
-import com.bohush.tasktwo.entity.TextInfo;
 import com.bohush.tasktwo.exception.TextException;
-import com.bohush.tasktwo.parser.*;
+import com.bohush.tasktwo.parser.TextParserChain;
 import com.bohush.tasktwo.reader.TextReader;
 import com.bohush.tasktwo.reader.impl.TextReaderImpl;
 import com.bohush.tasktwo.service.TextService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import java.util.List;
-import java.util.StringJoiner;
 
 public class TextServiceImpl implements TextService {
   private static final Logger log = LogManager.getLogger();
 
-  private TextReader reader;
-  private TextParser rootParser;
+  private final TextReader reader;
+  private final TextParserChain parserChain;
 
   public TextServiceImpl() {
     this.reader = new TextReaderImpl();
-    TextParser symbolParser = new LexemeToSymbolParser();
-    TextParser lexemeParser = new SentenceToLexemeParser();
-    TextParser sentenceParser = new ParagraphToSentenceParser();
-    this.rootParser = new TextToParagraphParser();
-
-    rootParser.setNextParser(sentenceParser);
-    sentenceParser.setNextParser(lexemeParser);
-    lexemeParser.setNextParser(symbolParser);
+    this.parserChain = new TextParserChain();
     log.info("TextService initialized. Parser chain configured.");
   }
 
   @Override
-  public TextInfo processText(String filePath) throws TextException {
+  public TextComponent processText(String filePath) throws TextException {
     String rawText = reader.read(filePath);
-    List<TextComponent> components = rootParser.parse(rawText);
-    TextComposite rootComposite = new TextComposite();
-    for (TextComponent component : components) {
-      rootComposite.add(component);
-    }
-    TextInfo result = new TextInfo(rawText, rootComposite);
-    log.info("Text processing finished. Root composite created.");
-    return result;
+    log.info("File read successfully.");
+    TextComponent rootComposite = parserChain.parse(rawText);
+    log.info("Text parsed into composite structure.");
+    return rootComposite;
   }
 
   @Override
-  public String restoreText(TextInfo textInfo) {
-    if (textInfo == null || textInfo.getRootComponent() == null) {
-      log.warn("Cannot restore text: TextInfo or RootComponent is null.");
+  public String restoreText(TextComponent rootComposite) {
+    if (rootComposite == null) {
+      log.warn("Cannot restore text: rootComposite is null.");
       return "";
     }
-    TextComposite root = textInfo.getRootComponent();
-    String restoredText = root.toString();
-    log.info("Text restored successfully. Length: {} chars. Text: {}", restoredText.length(), restoredText);
+    String restoredText = rootComposite.toString();
+    log.info("Text restored successfully.");
     return restoredText;
   }
 }
