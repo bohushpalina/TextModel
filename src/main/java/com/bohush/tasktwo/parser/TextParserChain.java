@@ -14,13 +14,13 @@ public class TextParserChain {
     TextParser text = new TextParserImpl(TextRegex.TEXT, TextType.TEXT);
     TextParser paragraph = new TextParserImpl(TextRegex.PARAGRAPH, TextType.PARAGRAPH);
     TextParser sentence = new TextParserImpl(TextRegex.SENTENCE, TextType.SENTENCE);
-    TextParser lexeme = new TextParserImpl(TextRegex.LEXEME, TextType.LEXEME);
-    TextParser symbol = new TextParserImpl(".", TextType.LETTER);
+    TextParser word = new TextParserImpl(TextRegex.LEXEME, TextType.WORD);
+    TextParser symbol = new TextParserImpl(TextRegex.SYMBOL, TextType.LETTER); // Новый уровень
 
     text.setNextParser(paragraph);
     paragraph.setNextParser(sentence);
-    sentence.setNextParser(lexeme);
-    lexeme.setNextParser(symbol);
+    sentence.setNextParser(word);
+    word.setNextParser(symbol); // WORD теперь ссылается на SYMBOL
 
     this.first = text;
   }

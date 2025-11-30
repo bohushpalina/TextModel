@@ -36,6 +36,7 @@ public abstract class AbstractTextParser implements TextParser {
     Matcher matcher = pattern.matcher(text);
     while (matcher.find()) {
       String fragment = matcher.group();
+
       if (successor == null) {
         result.addAll(parseSymbols(fragment));
         continue;
